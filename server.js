@@ -17,6 +17,7 @@ app.use(cors());
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/user", require("./routes/userRoutes"));
+
 app.use("/api", require("./routes/uploadRoutes"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
