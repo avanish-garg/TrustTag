@@ -108,3 +108,42 @@ const getProfile = async (req, res) => {
 
 // ✅ Export the functions
 module.exports = { register, login, getProfile };
+
+
+// const jwt = require("jsonwebtoken");
+
+// const authMiddleware = (req, res, next) => {
+//   try {
+//     console.log("🔹 Auth Middleware Called");
+
+//     const token = req.header("Authorization");
+//     if (!token) {
+//       return res.status(401).json({ error: "Access Denied. No token provided." });
+//     }
+
+//     // Extract token from "Bearer <token>"
+//     const extractedToken = token.startsWith("Bearer ") ? token.slice(7) : token;
+
+//     // Verify token
+//     const decoded = jwt.verify(extractedToken, process.env.JWT_SECRET);
+//     req.user = decoded; // Attach user info to request
+
+//     console.log("✅ Token Verified Successfully", decoded);
+//     next(); // Proceed to the next middleware/controller
+//   } catch (error) {
+//     console.error("❌ Authentication Error:", error.message);
+//     return res.status(401).json({ error: "Invalid or expired token", details: error.message });
+//   }
+// };
+
+// // ✅ Middleware for Role-Based Access Control
+// const roleMiddleware = (roles) => {
+//   return (req, res, next) => {
+//     if (!roles.includes(req.user.role)) {
+//       return res.status(403).json({ error: "Access Denied. Insufficient permissions." });
+//     }
+//     next();
+//   };
+// };
+
+// module.exports = { authMiddleware, roleMiddleware };
