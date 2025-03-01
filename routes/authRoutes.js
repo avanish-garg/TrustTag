@@ -15,23 +15,19 @@
 
 const express = require("express");
 const { register, login, getProfile } = require("../controllers/authController");
-const { authenticate, authorizeRoles } = require("../middlewares/auth"); // ✅ Ensure correct import
+const { authenticate, authenticateStudent } = require("../middlewares/auth");
 
 const router = express.Router();
 
-// ✅ Route for User Registration
+// ✅ User Authentication Routes
 router.post("/register", register);
-
-// ✅ Route for User Login
 router.post("/login", login);
 
-// ✅ Protected Route - Get User Profile
+// ✅ User Profile Routes
 router.get("/profile", authenticate, getProfile);
 
-// ✅ Protected Route - Admin Only
-router.get("/admin", authenticate, authorizeRoles("admin"), (req, res) => {
-    res.json({ message: "Welcome Admin!" });
-});
-
 module.exports = router;
+
+
+
 
