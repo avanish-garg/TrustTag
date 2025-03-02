@@ -1,41 +1,31 @@
-require("dotenv").config();
-const Web3 = require("web3");
-const fs = require("fs");
-const path = require("path");
+const { Web3 } = require('web3');
+const contractABI = require("../abi/StudentCredentials.json").abi;  // ✅ FIXED ABI IMPORT
+const contractAddress = process.env.CONTRACT_ADDRESS;
 
-// Load contract ABI and address
-const contractPath = path.resolve(__dirname, "../../contracts/StudentCredentials.json");
+// ✅ Ensure Web3 provider is correctly set (Ganache or Infura)
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_PROVIDER));
 
-if (!fs.existsSync(contractPath)) {
-  console.error("❌ Contract ABI file is missing! Please compile & migrate the contract.");
-  process.exit(1);
+// ✅ Contract Instance
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+// ✅ Upload Resume to Blockchain
+async function uploadResume(studentAddress, resumeHash) {
+    return contract.methods.uploadResume(resumeHash).send({ from: studentAddress });
 }
 
-const contractABI = JSON.parse(fs.readFileSync(contractPath, "utf-8"));
-
-const contractAddress = "0xYourContractAddress"; // Replace with deployed contract address
-
-// Connect to Blockchain (Ganache or Mumbai Testnet)
-const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545")); // Change if using Testnet
-
-// Get contract instance
-const contract = new web3.eth.Contract(contractABI.abi, contractAddress);
-
-// Function to store resume hash on blockchain
-async function storeResumeHash(userAddress, resumeHash) {
-  try {
-    const accounts = await web3.eth.getAccounts(); // Fetch accounts from blockchain
-    const tx = await contract.methods.uploadResume(resumeHash).send({
-      from: accounts[0], // Use first account to sign transaction
-      gas: 500000,
-    });
-
-    console.log("Resume hash stored on blockchain:", tx.transactionHash);
-    return tx.transactionHash;
-  } catch (error) {
-    console.error("Error storing resume hash:", error);
-    throw error;
-  }
+// ✅ Verify Resume
+async function verifyResume(employerAddress, studentAddress, resumeHash) {
+    return contract.methods.verifyResume(studentAddress, resumeHash).send({ from: employerAddress });
 }
 
-module.exports = { storeResumeHash };
+// ✅ Mint Academic Record as NFT
+async function mintAcademicRecord(studentAddress, record) {
+    return contract.methods.mintAcademicRecord(record).send({ from: studentAddress });
+}
+
+// ✅ Get Academic Record by Token ID
+async function getAcademicRecord(tokenId) {
+    return contract.methods.getAcademicRecord(tokenId).call();
+}
+
+module.exports = { uploadResume, verifyResume, mintAcademicRecord, getAcademicRecord, web3, contract };
