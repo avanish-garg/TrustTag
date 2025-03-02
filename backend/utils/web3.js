@@ -13,7 +13,7 @@ if (!fs.existsSync(contractPath)) {
 
 const contractABI = JSON.parse(fs.readFileSync(contractPath, "utf-8"));
 
-const contractAddress = "0xYourContractAddress"; // Replace with deployed contract address
+const contractAddress = "0x847c85B40d60aaA72633c4563C98bE23fB91fAa5"; // Replace with deployed contract address
 
 // Connect to Blockchain (Ganache or Mumbai Testnet)
 const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545")); // Change if using Testnet
