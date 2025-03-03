@@ -8,60 +8,97 @@ const web3 = new Web3("http://127.0.0.1:7545"); // Replace with your Ganache or 
 // Load the contract
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-
-
 // Function to store resume hash on the blockchain
-const storeResumeHash = async (userAddress, resumeHash) => {
+const uploadResume = async (studentAddress, resumeHash) => {
   try {
     // Validate inputs
-    if (!userAddress || !resumeHash) {
-      throw new Error("User address and resume hash are required.");
-    }
-
-    // Get accounts from the provider
-    const accounts = await web3.eth.getAccounts();
-    if (!accounts || accounts.length === 0) {
-      throw new Error("No accounts found. Ensure your provider is running.");
+    if (!studentAddress || !resumeHash) {
+      throw new Error("Student address and resume hash are required.");
     }
 
     // Call the contract method
     const result = await contract.methods
-      .storeResumeHash(resumeHash) // Call the updated function
-      .send({ from: userAddress, gas: 3000000 }); // Use user's address
+      .storeResumeHash(resumeHash) // Corrected function name
+      .send({ from: studentAddress, gas: 3000000 });
 
-    // Return only the transaction hash
+    // Return the transaction hash
     return result.transactionHash;
   } catch (error) {
-    console.error("❌ Error storing resume hash on blockchain:", error);
+    console.error("❌ Error uploading resume to blockchain:", error);
     throw error;
   }
 };
 
 // Function to verify resume hash on the blockchain
-const verifyResumeHash = async (employerAddress, studentAddress, providedHash) => {
+const verifyResume = async (employerAddress, studentAddress, providedHash) => {
   try {
     // Validate inputs
     if (!employerAddress || !studentAddress || !providedHash) {
       throw new Error("Employer address, student address, and provided hash are required.");
     }
 
-    // Get accounts from the provider
-    const accounts = await web3.eth.getAccounts();
-    if (!accounts || accounts.length === 0) {
-      throw new Error("No accounts found. Ensure your provider is running.");
+    // Call the contract method
+    const result = await contract.methods
+      .verifyResumeHash(studentAddress, providedHash) // Corrected function name
+      .send({ from: employerAddress, gas: 3000000 });
+
+    // Return the transaction hash
+    return result.transactionHash;
+  } catch (error) {
+    console.error("❌ Error verifying resume on blockchain:", error);
+    throw error;
+  }
+};
+
+// Function to mint academic record as NFT
+const mintAcademicRecord = async (studentAddress, record) => {
+  try {
+    // Validate inputs
+    if (!studentAddress || !record) {
+      throw new Error("Student address and record are required.");
     }
 
     // Call the contract method
     const result = await contract.methods
-      .verifyResumeHash(studentAddress, providedHash) // Call the updated function
-      .send({ from: employerAddress, gas: 3000000 }); // Use employer's address
+      .mintAcademicRecord(record) // Call the contract function
+      .send({ from: studentAddress, gas: 3000000 }); // Use student's address
 
-    return result;
+    // Return the transaction hash
+    return result.transactionHash;
   } catch (error) {
-    console.error("❌ Error verifying resume hash on blockchain:", error);
+    console.error("❌ Error minting academic record on blockchain:", error);
+    throw error;
+  }
+};
+
+// Function to get academic record by token ID
+const getAcademicRecord = async (tokenId) => {
+  try {
+    // Validate inputs
+    if (!tokenId) {
+      throw new Error("Token ID is required.");
+    }
+
+    // Ensure tokenId is a valid numeric string
+    if (typeof tokenId !== "string" || !/^\d+$/.test(tokenId)) {
+      throw new Error("Token ID must be a valid number.");
+    }
+
+    // Convert tokenId to a BigInt
+    const tokenIdNumber = BigInt(tokenId);
+
+    // Call the contract method
+    const record = await contract.methods
+      .getAcademicRecord(tokenIdNumber) // Pass the converted tokenId
+      .call();
+
+    // Return the academic record
+    return record;
+  } catch (error) {
+    console.error("❌ Error fetching academic record from blockchain:", error);
     throw error;
   }
 };
 
 // Export functions
-module.exports = { storeResumeHash, verifyResumeHash };
+module.exports = { uploadResume, verifyResume, mintAcademicRecord, getAcademicRecord };
