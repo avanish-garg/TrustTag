@@ -14,18 +14,16 @@ connectDB()
     console.log("✅ Database connected successfully");
 
     // ✅ Middleware
-    app.use(express.json({ limit: "10mb" })); // Parse JSON requests
-    app.use(express.urlencoded({ extended: true, limit: "10mb" })); // Parse URL-encoded data
-    app.use(cors()); // Enable CORS
-    app.use(morgan("dev")); // Enable request logging
+    app.use(express.json({ limit: "10mb" }));
+    app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+    app.use(cors());
+    app.use(morgan("dev"));
 
     // ✅ API Routes
     app.use("/api/auth", require("./routes/authRoutes"));
-    app.use("/api/user", require("./routes/userRoutes"));
-    app.use("/api/resumes", require("./routes/resumeRoutes")); // 🔹 Resume Upload & Verification
-    app.use("/api/verification", require("./routes/verificationRoutes")); // 🔹 Verification API
-    app.use("/api/blockchain", require("./routes/blockchainRoutes")); // 🔹 Blockchain Integration
-    app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Static Uploads
+    app.use("/api/user", require("./routes/userRoutes")); // Add this line
+    app.use("/api/resumes", require("./routes/resumeRoutes"));
+    app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
     // ✅ Default Route
     app.get("/", (req, res) => {
@@ -43,9 +41,8 @@ connectDB()
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
-
   })
   .catch((err) => {
     console.error("❌ Database connection failed:", err);
-    process.exit(1); // Exit the app if DB connection fails
+    process.exit(1);
   });

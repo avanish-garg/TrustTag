@@ -1,33 +1,17 @@
-// const express = require("express");
-// const { register, login, getProfile } = require("../controllers/authController");
-// const { authenticate, authorizeRoles } = require("../middlewares/auth"); // ✅ Correct middleware import
-
-// const router = express.Router();
-
-// router.post("/register", register);
-// router.post("/login", login);
-// router.get("/profile", authenticate, getProfile); // ✅ Fixed authMiddleware issue
-// router.get("/admin", authenticate, authorizeRoles("admin"), (req, res) => {
-//     res.json({ message: "Welcome Admin!" });
-// });
-
-// module.exports = router;
-
 const express = require("express");
-const { register, login, getProfile } = require("../controllers/authController");
-const { authenticate, authenticateStudent } = require("../middlewares/auth");
-
 const router = express.Router();
+const authController = require("../controllers/authController");
 
-// ✅ User Authentication Routes
-router.post("/register", register);
-router.post("/login", login);
+// ✅ Register User Route
+router.post("/register", authController.register);
 
-// ✅ User Profile Routes
-router.get("/profile", authenticate, getProfile);
+// ✅ Login User Route
+router.post("/login", authController.login);
+
+// ✅ Get User Profile Route (Protected)
+router.get("/profile", authController.getProfile);
+
+// ✅ Update User Profile Route (Protected)
+router.put("/profile", authController.updateProfile);
 
 module.exports = router;
-
-
-
-
