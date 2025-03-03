@@ -1,26 +1,12 @@
-// const mongoose = require("mongoose");
-
-// const userSchema = new mongoose.Schema({
-//   name: { type: String, required: true },
-//   email: { type: String, required: true, unique: true },
-//   username: { type: String, required: true, unique: true }, // ✅ Ensure username is required & unique
-//   password: { type: String, required: true },
-//   role: { type: String, enum: ["student", "employer"], required: true }
-// });
-
-// const User = mongoose.model("User", userSchema);
-
-// module.exports = User;
-
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, enum: ["student", "employer", "admin"], default: "student" },
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ["student", "employer", "admin"], default: "student" },
+  address: { type: String, default: "" }, // Add blockchain address field
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

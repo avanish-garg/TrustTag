@@ -1,31 +1,42 @@
-const { Web3 } = require('web3');
-const contractABI = require("../abi/StudentCredentials.json").abi;  // ✅ FIXED ABI IMPORT
-const contractAddress = process.env.CONTRACT_ADDRESS;
+const Web3 = require("web3");
+const contractABI = require("../abi/StudentCredentials.json"); // Replace with your contract ABI
+const contractAddress = "0xA2e6575Ad46bCCD1E05Eb88527DFAAAb290fD168"; // Replace with your contract address
 
-// ✅ Ensure Web3 provider is correctly set (Ganache or Infura)
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3_PROVIDER));
+// Initialize Web3
+const web3 = new Web3("http://localhost:7545"); // Replace with your Ganache or Polygon RPC URL
 
-// ✅ Contract Instance
+// Load the contract
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-// ✅ Upload Resume to Blockchain
-async function uploadResume(studentAddress, resumeHash) {
-    return contract.methods.uploadResume(resumeHash).send({ from: studentAddress });
-}
+// Function to store resume hash on the blockchain
+const storeResumeHash = async (userAddress, resumeHash) => {
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const result = await contract.methods
+      .storeResumeHash(resumeHash) // Call the updated function
+      .send({ from: userAddress, gas: 3000000 }); // Use user's address
 
-// ✅ Verify Resume
-async function verifyResume(employerAddress, studentAddress, resumeHash) {
-    return contract.methods.verifyResume(studentAddress, resumeHash).send({ from: employerAddress });
-}
+    return result;
+  } catch (error) {
+    console.error("❌ Error storing resume hash on blockchain:", error);
+    throw error;
+  }
+};
 
-// ✅ Mint Academic Record as NFT
-async function mintAcademicRecord(studentAddress, record) {
-    return contract.methods.mintAcademicRecord(record).send({ from: studentAddress });
-}
+// Function to verify resume hash on the blockchain
+const verifyResumeHash = async (employerAddress, studentAddress, providedHash) => {
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const result = await contract.methods
+      .verifyResumeHash(studentAddress, providedHash) // Call the updated function
+      .send({ from: employerAddress, gas: 3000000 }); // Use employer's address
 
-// ✅ Get Academic Record by Token ID
-async function getAcademicRecord(tokenId) {
-    return contract.methods.getAcademicRecord(tokenId).call();
-}
+    return result;
+  } catch (error) {
+    console.error("❌ Error verifying resume hash on blockchain:", error);
+    throw error;
+  }
+};
 
-module.exports = { uploadResume, verifyResume, mintAcademicRecord, getAcademicRecord, web3, contract };
+// Export functions
+module.exports = { storeResumeHash, verifyResumeHash };

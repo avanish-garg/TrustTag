@@ -7,6 +7,7 @@ function generateHash(buffer) {
   return crypto.createHash("sha256").update(buffer).digest("hex");
 }
 
+
 // ✅ Upload Resume Function
 exports.uploadResume = async (req, res) => {
   try {
@@ -28,10 +29,12 @@ exports.uploadResume = async (req, res) => {
 
     await newResume.save();
 
+    // Check if user has a blockchain address
     if (!req.user.address) {
       return res.status(400).json({ message: "User has no blockchain address linked." });
     }
 
+    // Send hash to blockchain
     const transactionHash = await storeResumeHash(req.user.address, resumeHash);
 
     res.status(201).json({

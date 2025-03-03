@@ -5,14 +5,13 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract StudentCredentials is ERC721, Ownable {
-
     mapping(address => string) public resumeHashes;
     mapping(uint => string) public academicRecords;
     mapping(address => bool) public verifiedResumes;
 
     uint public nextTokenId;
 
-    event ResumeUploaded(address indexed student, string resumeHash);
+    event ResumeHashStored(address indexed student, string resumeHash);
     event ResumeVerified(address indexed employer, address indexed student);
     event AcademicRecordMinted(address indexed student, uint indexed tokenId, string record);
 
@@ -21,13 +20,14 @@ contract StudentCredentials is ERC721, Ownable {
     }
 
     // Function for students to upload a resume hash
-    function uploadResume(string memory resumeHash) external {
+    function storeResumeHash(string memory resumeHash) external {
+        require(bytes(resumeHash).length > 0, "Resume hash cannot be empty!");
         resumeHashes[msg.sender] = resumeHash;
-        emit ResumeUploaded(msg.sender, resumeHash);
+        emit ResumeHashStored(msg.sender, resumeHash);
     }
 
     // Function for employers to verify a resume hash
-    function verifyResume(address student, string memory providedHash) external {
+    function verifyResumeHash(address student, string memory providedHash) external {
         require(keccak256(abi.encodePacked(resumeHashes[student])) == keccak256(abi.encodePacked(providedHash)), "Resume hash mismatch!");
         verifiedResumes[student] = true;
         emit ResumeVerified(msg.sender, student);

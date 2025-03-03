@@ -5,10 +5,11 @@ const User = require("../models/User");
 // ✅ Register User Function
 const register = async (req, res) => {
   try {
-    const { name, email, username, password, role } = req.body;
+    const { name, email, username, password, role, address } = req.body;
 
-    if (!name || !email || !username || !password || !role) {
-      return res.status(400).json({ error: "All fields are required" });
+    // Validate required fields
+    if (!name || !email || !username || !password || !role || !address) {
+      return res.status(400).json({ error: "All fields are required, including blockchain address." });
     }
 
     // Check if email or username already exists
@@ -24,13 +25,14 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create new user
+    // Create new user with blockchain address
     const newUser = new User({
       name,
       email,
       username,
       password: hashedPassword,
       role,
+      address, // Add blockchain address
     });
 
     await newUser.save();
@@ -59,6 +61,11 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    // Ensure JWT_SECRET is loaded
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined in .env");
     }
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
@@ -93,9 +100,13 @@ const getProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { name, email } = req.body;
+    const { name, email, address } = req.body; // Allow updating blockchain address
 
-    const updatedUser = await User.findByIdAndUpdate(userId, { name, email }, { new: true }).select("-password");
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, email, address }, // Update blockchain address
+      { new: true }
+    ).select("-password");
 
     res.status(200).json({ message: "Profile updated successfully!", user: updatedUser });
   } catch (error) {
