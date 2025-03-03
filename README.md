@@ -1,6 +1,6 @@
 # TrustTag: **Decentralized Resume Verification System**
 
-![Project Logo](https://via.placeholder.com/150) <!-- Add a logo if you have one -->
+<!-- ![Project Logo](https://via.placeholder.com/150)  Add a logo if you have one -->
 
 A blockchain-based system for securely storing and verifying resumes and academic credentials using NFTs. Built with **Node.js**, **Express**, **MongoDB**, **Solidity**, and **Web3.js**.
 
@@ -219,8 +219,6 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ---
 
 ## **Contact**
-- **Avanish Garg**: [GitHub](https://github.com/avanish-garg) | [Email](mailto:avanish@example.com)
+- **Avanish Garg**: [GitHub](https://github.com/avanish-garg) | [Email](mailto:gargavanish@gmail.com)
 
 ---
-
-Feel free to customize this template further, bhai! Let me know if you need any more help. 😊🚀
