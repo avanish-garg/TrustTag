@@ -23,6 +23,7 @@ connectDB()
     app.use("/api/auth", require("./routes/authRoutes"));
     app.use("/api/user", require("./routes/userRoutes")); // Add this line
     app.use("/api/resumes", require("./routes/resumeRoutes"));
+    app.use("/api/blockchain", require("./routes/blockchainRoutes"));
     app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
     // ✅ Default Route

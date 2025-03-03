@@ -3,10 +3,12 @@ const contractABI = require("../abi/StudentCredentials.json").abi; // Ensure the
 const contractAddress = "0xA2e6575Ad46bCCD1E05Eb88527DFAAAb290fD168"; // Replace with your contract address
 
 // Initialize Web3
-const web3 = new Web3("http://localhost:7545"); // Replace with your Ganache or Polygon RPC URL
+const web3 = new Web3("http://127.0.0.1:7545"); // Replace with your Ganache or Polygon RPC URL
 
 // Load the contract
 const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+
 
 // Function to store resume hash on the blockchain
 const storeResumeHash = async (userAddress, resumeHash) => {
@@ -27,7 +29,8 @@ const storeResumeHash = async (userAddress, resumeHash) => {
       .storeResumeHash(resumeHash) // Call the updated function
       .send({ from: userAddress, gas: 3000000 }); // Use user's address
 
-    return result;
+    // Return only the transaction hash
+    return result.transactionHash;
   } catch (error) {
     console.error("❌ Error storing resume hash on blockchain:", error);
     throw error;
