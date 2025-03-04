@@ -9,7 +9,7 @@ const web3 = new Web3("http://127.0.0.1:7545"); // Replace with your Ganache or 
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
 // Function to store resume hash on the blockchain
-const uploadResume = async (studentAddress, resumeHash) => {
+const storeResumeHash = async (studentAddress, resumeHash) => { // Renamed from uploadResume
   try {
     // Validate inputs
     if (!studentAddress || !resumeHash) {
@@ -101,4 +101,4 @@ const getAcademicRecord = async (tokenId) => {
 };
 
 // Export functions
-module.exports = { uploadResume, verifyResume, mintAcademicRecord, getAcademicRecord };
+module.exports = { storeResumeHash, verifyResume, mintAcademicRecord, getAcademicRecord }; // Updated export
