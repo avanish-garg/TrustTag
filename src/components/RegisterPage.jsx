@@ -7,6 +7,53 @@ import Footer from "./Footer";
 import { FaCalendarAlt } from "react-icons/fa";
 
 const RegisterPage = () => {
+  // const [formData, setFormData] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   credentialName: "",
+  //   credentialType: "",
+  //   organizationName: "",
+  //   issueDate: "",
+  //   resume: null, // Store file
+  // });
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  // const handleFileChange = (e) => {
+  //   setFormData({ ...formData, resume: e.target.files[0] });
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+    
+  //   if (!formData.resume) {
+  //     alert("Please upload a resume");
+  //     return;
+  //   }
+
+  //   const formDataToSend = new FormData();
+  //   formDataToSend.append("resume", formData.resume);
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/api/resumes/upload", // Adjust API URL
+  //       formDataToSend,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     alert(`Resume uploaded! Hash: ${response.data.resumeHash}`);
+  //   } catch (error) {
+  //     console.error("Upload failed:", error);
+  //     alert("Error uploading resume");
+  //   }
+  // };
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
       {/* Top Header */}
