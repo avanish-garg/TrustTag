@@ -1,6 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import ApplicantDashboard from "./components/ApplicantDashboard";
-import "./index.css"; // Tailwind CSS import
 import RegisterPage from "./components/RegisterPage";
 import CredentialPage from "./components/CredentialPage";
 import RequestsPage from "./components/RequestsPage";
@@ -10,38 +10,38 @@ import VerificationRequestPage from "./components/VerificationRequestPage";
 import VerificationRequestCheckPage from "./components/VerificationRequestCheckPage";
 import ProgressSecondPage from "./components/ProgressSecondPage";
 import HomePage from "./components/HomePage";
-import "./styles/Login.css";
-import SignUp from "./components/Signup";
-import Forgot from "./components/Forgot";
+import AboutPage from "./components/AboutPage";
 import LoginForm from "./components/LoginForm";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signup from "./components/Signup";
 
+import "./index.css"; // Tailwind CSS import
+import "./Login.css";
 function App() {
   return (
-    <>
-      <ApplicantDashboard />
-      <RegisterPage />
-      <CredentialPage />
-      <RequestsPage />
-      <ProfileUpdatePage />
-      <RecordPage />
-      <VerificationRequestPage />
-      <VerificationRequestCheckPage />
-      <ProgressSecondPage />
-      <HomePage />
-      <Router>
-      <div className="login-container">
-        <div className="login-box">
-          <Routes>
-            <Route path="/" element={<LoginForm />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgotpassword" element={<Forgot />} />
-            
-          </Routes>
-        </div>
-      </div>
+    
+    <Router>
+      <Routes>
+        {/* Home Page */}
+        <Route path="/" element={<HomePage />} />
+    
+        {/* Dashboard and Other Pages */}
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/sign-up" element={<Signup />} />
+        <Route path="/applicant-dashboard" element={<ApplicantDashboard />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/credential" element={<CredentialPage />} />
+        <Route path="/requests" element={<RequestsPage />} />
+        <Route path="/profile-update" element={<ProfileUpdatePage />} />
+        <Route path="/record" element={<RecordPage />} />
+        <Route path="/verification-request" element={<VerificationRequestPage />} />
+        <Route path="/verification-request-check" element={<VerificationRequestCheckPage />} />
+        <Route path="/progress-second" element={<ProgressSecondPage />} />
+        <Route path="/about" element={<AboutPage />} />
+
+        {/* Redirect unknown routes to home */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </Router>
-    </>
   );
 }
 
