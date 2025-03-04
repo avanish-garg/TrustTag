@@ -1,0 +1,168 @@
+/* General container styling */
+.login-container {
+    display: flex;  
+    height: 100vh;
+    background: url('/public/background.svg') no-repeat center center/cover; 
+    align-items: center;
+    justify-content: center;
+    justify-content: flex-end;
+    padding-right: 10%;
+  }
+  
+  /* Right-side login box */
+  .login-box {
+    
+    width: 400px;
+    background: #1c1c1e;
+    padding: 60px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Login form styling */
+  .login-form h2 {
+    color: #ffffff;
+    /* margin-bottom: 10px; */
+    margin-top: -40px; /* Move upwards */
+    margin-bottom: -17px;
+   
+  }
+  .login-form p {
+    color: #aaa;
+   
+  }
+  #ep {
+    color: #aaa;
+   
+  }
+  
+  input{
+    width: 80%;
+    padding: 10px;
+    margin: 20px 0;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background: #2a2a2c;
+    color: #fff;
+  }
+  
+  input::placeholder {
+    color: #777;
+  }
+  select{
+    width: 85%;
+    padding: 10px;
+    margin: 20px 0;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background: #2a2a2c;
+    color: #fff;
+  }
+  .login-button {
+    width: 60%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size:medium;
+    cursor: pointer;
+  }
+  
+  .login-button:hover {
+    background: #0056b3;
+  }
+  
+  /* Google Login Button */
+  /* .google-login {
+    background: white;
+    color: black;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+  }
+  
+  .google-login:hover {
+    background: #ddd;
+  } */
+  .google-login {
+    background-color: white;
+  }
+  .google-login button {
+    /* padding: 0.5rem; */
+    border-radius: 10%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  /* .google-login {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 0.5rem;
+  } */
+  /* Error message styling */
+  .error {
+    color: red;
+    font-size: 14px;
+  }
+  
+  #a {
+    color: #ffcc00; /* Yellow color */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  #a:hover {
+    text-decoration: underline;
+    color: #e6b800; /* Darker yellow on hover */
+  }
+  #fg{
+    padding:100px;
+    
+    text-decoration: none;
+    text-align: right;
+    color:red;
+    font-weight: lighter;
+  }
+  .password-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .password-input {
+    width: 100%;
+    position:fixed;
+    top:20px;
+    bottom:20px;
+    padding: 10px 40px 10px 10px; /* Extra space for the eye icon */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+  }
+  
+  
+  
