@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import OurTeamSection from "./OurTeamSection";
+import OurTeamSction from "./OurTeamSction";
 import ContactUsSection from "./ContactUsSection";
 
 // Make sure this path matches the actual location of AboutImg.svg in your project.
@@ -61,7 +61,7 @@ function AboutPage() {
       </main>
       <section>
         {/* Our Team Section */}
-        <OurTeamSection />
+        <OurTeamSction />
       </section>
       <section>
         {/* Contact Us Section */}
