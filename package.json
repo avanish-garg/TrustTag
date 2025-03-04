@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.2.0",
+    "@openzeppelin/contracts": "^4.9.3",
     "abbrev": "^1.1.1",
     "abitype": "^0.7.1",
     "abort-controller": "^3.0.0",
