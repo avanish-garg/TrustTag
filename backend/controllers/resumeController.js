@@ -27,10 +27,11 @@ exports.uploadResume = async (req, res) => {
     // Analyze the resume using Solo AI
     const analysisResult = await analyzeResumeWithSolo(fileBuffer, fileExtension);
 
-    // Save the resume hash to MongoDB (without the analysis result)
+    // Save the resume and analysis result to MongoDB
     const newResume = new Resume({
       user: req.user.id,
       resumeHash: resumeHash,
+      analysisResult: analysisResult, // Store the cleaned response as a string
     });
 
     await newResume.save();
@@ -47,14 +48,13 @@ exports.uploadResume = async (req, res) => {
       message: "Resume uploaded successfully",
       resumeHash,
       transactionHash,
-      analysisResult, // Return the raw response from Solo AI
+      analysisResult, // Return the cleaned response as a string
     });
   } catch (error) {
     console.error("❌ Error uploading resume:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
-
 
 // ✅ Verify Resume Function
 exports.verifyResume = async (req, res) => {
