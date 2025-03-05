@@ -2,3 +2,5 @@ node_modules/
 .env
 build/
 *.log
+lit_model.pth
+model.safetensors

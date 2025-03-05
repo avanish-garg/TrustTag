@@ -1,0 +1,38 @@
+attention_logit_softcapping: null
+attention_scores_scalar: null
+attn_bias: false
+bias: false
+block_size: 8192
+final_logit_softcapping: null
+gelu_approximate: none
+head_size: 64
+hf_config:
+  name: SmolLM2-135M-Instruct
+  org: HuggingFaceTB
+intermediate_size: 1536
+lm_head_bias: false
+mlp_class_name: LLaMAMLP
+n_embd: 576
+n_expert: 0
+n_expert_per_token: 0
+n_head: 9
+n_layer: 30
+n_query_groups: 3
+name: SmolLM2-135M-Instruct
+norm_class_name: RMSNorm
+norm_eps: 1.0e-05
+norm_qk: false
+padded_vocab_size: 49152
+padding_multiple: 512
+parallel_residual: false
+post_attention_norm: false
+post_mlp_norm: false
+rope_adjustments: null
+rope_base: 100000
+rope_condense_ratio: 1
+rotary_percentage: 1.0
+scale_embeddings: false
+shared_attention_norm: false
+sliding_window_layer_placing: null
+sliding_window_size: null
+vocab_size: 49152
