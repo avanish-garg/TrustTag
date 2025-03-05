@@ -9,6 +9,7 @@ def analyze_resume_with_solo(file_path):
     # Read the resume file
     with open(file_path, "rb") as file:
         file_content = file.read()
+        print(file_content)
 
     # Send the file content to Solo AI
     data = {

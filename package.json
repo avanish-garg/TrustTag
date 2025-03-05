@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3",
+    "@truffle/hdwallet-provider": "^2.1.15",
     "abbrev": "^1.1.1",
     "abitype": "^0.7.1",
     "abort-controller": "^3.0.0",
