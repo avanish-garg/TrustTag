@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const Resume = require("../models/Resume");
 const { storeResumeHash } = require("../utils/web3");
+const { analyzeResumeWithSolo } = require("../utils/resumeAnalysis"); // Import your Python integration
 
 // Function to generate SHA256 hash
 function generateHash(buffer) {
@@ -21,9 +22,13 @@ exports.uploadResume = async (req, res) => {
     const fileBuffer = req.file.buffer;
     const resumeHash = generateHash(fileBuffer);
 
+    // Analyze the resume using Solo AI (Python)
+    const analysisResult = await analyzeResumeWithSolo(fileBuffer.toString());
+
     const newResume = new Resume({
       user: req.user.id,
       resumeHash: resumeHash,
+      analysisResult: analysisResult,  // Store the analysis result from Solo AI
     });
 
     await newResume.save();
@@ -50,23 +55,20 @@ exports.uploadResume = async (req, res) => {
 // ✅ Verify Resume Function
 exports.verifyResume = async (req, res) => {
   try {
-    // Ensure the user is an employer
     if (!req.user || req.user.role !== "employer") {
       return res.status(403).json({ message: "Forbidden: Only employers can verify resumes." });
     }
 
     const { studentAddress, resumeHash } = req.body;
 
-    // Validate required data
     if (!studentAddress || !resumeHash) {
       return res.status(400).json({ message: "Missing student address or resume hash." });
     }
 
     // Verify the resume on the blockchain
-    // Placeholder for actual verification logic with blockchain
-    // Example: await verifyResumeOnBlockchain(studentAddress, resumeHash);
+    const transactionHash = await storeResumeHash(studentAddress, resumeHash);
 
-    res.status(200).json({ message: "Resume verified successfully" });
+    res.status(200).json({ message: "Resume verified successfully", transactionHash });
   } catch (error) {
     console.error("❌ Error verifying resume:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });

@@ -9,19 +9,16 @@ const web3 = new Web3("http://127.0.0.1:7545"); // Replace with your Ganache or 
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
 // Function to store resume hash on the blockchain
-const storeResumeHash = async (studentAddress, resumeHash) => { // Renamed from uploadResume
+const storeResumeHash = async (studentAddress, resumeHash) => {
   try {
-    // Validate inputs
     if (!studentAddress || !resumeHash) {
       throw new Error("Student address and resume hash are required.");
     }
 
-    // Call the contract method
     const result = await contract.methods
-      .storeResumeHash(resumeHash) // Corrected function name
+      .storeResumeHash(resumeHash)
       .send({ from: studentAddress, gas: 3000000 });
 
-    // Return the transaction hash
     return result.transactionHash;
   } catch (error) {
     console.error("❌ Error uploading resume to blockchain:", error);
@@ -29,20 +26,16 @@ const storeResumeHash = async (studentAddress, resumeHash) => { // Renamed from 
   }
 };
 
-// Function to verify resume hash on the blockchain
 const verifyResume = async (employerAddress, studentAddress, providedHash) => {
   try {
-    // Validate inputs
     if (!employerAddress || !studentAddress || !providedHash) {
       throw new Error("Employer address, student address, and provided hash are required.");
     }
 
-    // Call the contract method
     const result = await contract.methods
-      .verifyResumeHash(studentAddress, providedHash) // Corrected function name
+      .verifyResumeHash(studentAddress, providedHash)
       .send({ from: employerAddress, gas: 3000000 });
 
-    // Return the transaction hash
     return result.transactionHash;
   } catch (error) {
     console.error("❌ Error verifying resume on blockchain:", error);
