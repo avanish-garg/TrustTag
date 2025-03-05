@@ -1,6 +1,6 @@
 import sys
 import requests
-import json  # Add this import for JSON parsing
+import json
 from PyPDF2 import PdfReader  # For PDF files
 from docx import Document  # For DOCX files
 
@@ -42,9 +42,22 @@ def send_to_solo(text):
     url = "http://localhost:5070/predict"  # Solo AI server endpoint
     headers = {"Content-Type": "application/json"}
 
-    # Send the text to Solo AI
+    # Define a custom prompt for resume analysis
+    prompt = f"""
+    Analyze the following resume and provide a detailed summary in the following format:
+    1. **Skills**: List the key skills mentioned in the resume.
+    2. **Education**: Summarize the educational qualifications.
+    3. **Experience**: Summarize the work experience.
+    4. **Projects**: List any notable projects.
+    5. **Achievements**: Highlight any achievements or certifications.
+
+    Resume Text:
+    {text}
+    """
+
+    # Send the prompt to Solo AI
     data = {
-        "prompt": text  # Send the extracted text as the prompt
+        "prompt": prompt  # Send the custom prompt
     }
 
     print("✅ Sending text to Solo AI...", file=sys.stderr)
