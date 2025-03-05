@@ -2,6 +2,9 @@ import React from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FeaturesSection from "./FeaturesSection";
+import ImageSlider from "./ImageSlider";
+import ExploreSection from "./ExploreSection";
 
 /**
  * This component displays:
@@ -57,6 +60,10 @@ function HomePage() {
           </div>
         </div>
       </main>
+      <FeaturesSection/>
+      <ImageSlider/>
+      <ExploreSection/>
+      
 
       {/* Footer */}
       <Footer />

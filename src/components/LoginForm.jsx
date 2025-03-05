@@ -3,13 +3,14 @@ import SocialLogin from "./SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -17,7 +18,7 @@ const LoginForm = () => {
       return;
     }
     setError("");
-    console.log("Form submitted with", { email, password });
+    // console.log("Form submitted with", { email, password });
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", {
         email,
@@ -26,8 +27,9 @@ const LoginForm = () => {
 
       // Store JWT token in localStorage
       localStorage.setItem("token", response.data.token);
-
-      alert("Login successful!");
+      
+      //  alert("Login successful!");
+       navigate("/home");
     } catch (error) {
       setError(error.response?.data?.error || "Invalid credentials");
     }

@@ -4,6 +4,7 @@ import ApplicantDashboard from "./components/ApplicantDashboard";
 import RegisterPage from "./components/RegisterPage";
 import CredentialPage from "./components/CredentialPage";
 import RequestsPage from "./components/RequestsPage";
+
 import ProfileUpdatePage from "./components/ProfileUpdatePage";
 import RecordPage from "./components/RecordPage";
 import VerificationRequestPage from "./components/VerificationRequestPage";
@@ -13,9 +14,12 @@ import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
 import LoginForm from "./components/LoginForm";
 import Signup from "./components/Signup";
-
+import FetchAcademicRecord from "./components/GetAcademicRecord"
 import "./index.css"; // Tailwind CSS import
 import "./Login.css";
+import AddResume from "./components/Add Resume";
+import MintAcademicRecord from "./components/MintAcademic";
+
 function App() {
   return (
     
@@ -29,6 +33,9 @@ function App() {
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/applicant-dashboard" element={<ApplicantDashboard />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/upload" element={<AddResume />} />
+        <Route path="/mint" element={<MintAcademicRecord/>} />
+        <Route path="/getacademic" element={<FetchAcademicRecord />} />
         <Route path="/credential" element={<CredentialPage />} />
         <Route path="/requests" element={<RequestsPage />} />
         <Route path="/profile-update" element={<ProfileUpdatePage />} />
