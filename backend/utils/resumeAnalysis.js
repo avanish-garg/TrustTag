@@ -2,10 +2,10 @@ const { spawn } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-async function analyzeResumeWithSolo(fileBuffer) {
+async function analyzeResumeWithSolo(fileBuffer, fileExtension) {
   return new Promise((resolve, reject) => {
     // Save the file buffer to a temporary file
-    const tempFilePath = path.join(__dirname, "temp_resume.pdf");
+    const tempFilePath = path.join(__dirname, `temp_resume.${fileExtension}`);
     fs.writeFileSync(tempFilePath, fileBuffer);
 
     console.log("✅ Temporary resume file saved:", tempFilePath);
@@ -30,15 +30,8 @@ async function analyzeResumeWithSolo(fileBuffer) {
       if (code !== 0) {
         reject("Python process failed");
       } else {
-        try {
-          // Parse the JSON output from the Python script
-          const parsedResult = JSON.parse(result);
-          console.log("✅ Analysis result:", parsedResult);
-          resolve(parsedResult);
-        } catch (error) {
-          console.error("❌ Failed to parse Python output as JSON:", error);
-          reject("Failed to parse Python output as JSON");
-        }
+        // Return the raw response from Solo AI
+        resolve(result);
       }
     });
   });
